@@ -1,0 +1,117 @@
+:root {
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body {
+	display: flex;
+	flex-direction: column;
+	min-width: 320px;
+	min-height: 100vh;
+}
+
+header {
+	padding: 10px;
+}
+
+header > nav {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+.dropdown {
+	position: relative; /* Pozycjonowanie względem rodzica */
+}
+
+.nav-button {
+	background-color: transparent; /* Tło przycisku */
+	border: 2px solid #ddd; /* Granica przycisku */
+	border-radius: 8px;
+	padding: 8px 16px; /* Wyrównanie tekstu wewnątrz przycisku */
+	font-size: 16px; /* Rozmiar czcionki */
+	color: #fff; /* Kolor tekstu */
+	cursor: pointer;
+	transition: all 0.3s ease; /* Animacja przejścia przy hover */
+}
+
+.nav-button:hover {
+	background-color: #333; /* Kolor tła przy hover */
+}
+
+.nav-button:focus {
+	outline: none; /* Usuwamy obramowanie przy kliknięciu */
+	box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.5); /* Efekt focus */
+}
+.plant-list {
+	background-color: #242424;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	list-style: none;
+	padding: 8px 0;
+	margin: 0;
+	z-index: 100;
+}
+
+.plant-list li {
+	padding: 8px 12px;
+	cursor: pointer;
+	background-color: #242424;
+	border-radius: 5px;
+}
+
+.plant-list li:hover {
+	background-color: #f0f0f0;
+	color: #242424;
+	border-radius: 5px;
+}
+
+.pole {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, auto));
+	grid-template-rows: repeat(2, 1fr);
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.pole-grzadka {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: auto;
+	max-width: 100%;
+}
+
+.pole-grzadka > img {
+	height: 350px;
+	width: auto;
+	max-width: 100%;
+	object-fit: contain;
+}
+
+.ready {
+	border: 3px solid rgb(64, 193, 73);
+}
+
+.fill-border {
+	border: 3px solid rgba(64, 193, 73, 0);
+}
