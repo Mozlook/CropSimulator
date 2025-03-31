@@ -1,5 +1,5 @@
 import { useState } from "react";
-export default function Header({ isPlantOpen, handleButtonClick }) {
+export default function Header({ isPlantOpen, handleButtonClick, cropAmount }) {
 	return (
 		<header>
 			<nav>
@@ -13,13 +13,13 @@ export default function Header({ isPlantOpen, handleButtonClick }) {
 					{isPlantOpen && (
 						<ul className="plant-list">
 							<li onClick={() => handleButtonClick("Pszenica", false)}>
-								Pszenica
+								{`Pszenica ${cropAmount[0]}`}
 							</li>
 							<li onClick={() => handleButtonClick("Marchewka", false)}>
-								Marchewka
+								{`Marchewka ${cropAmount[1]}`}
 							</li>
 							<li onClick={() => handleButtonClick("Ziemniak", false)}>
-								Ziemniak
+								{`Ziemniak ${cropAmount[2]}`}
 							</li>
 						</ul>
 					)}

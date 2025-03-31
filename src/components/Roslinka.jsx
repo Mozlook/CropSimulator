@@ -4,7 +4,7 @@ export default function Roslinka(props) {
 	const img_path = props.spoiled
 		? "spoiled.png"
 		: (() => {
-				switch (props.plant_type) {
+				switch (props.type) {
 					case 1:
 						return `wheat/${props.stage}.png`;
 					case 2:
@@ -19,7 +19,7 @@ export default function Roslinka(props) {
 	return (
 		<div
 			className={`pole-grzadka ${ready_border}`}
-			onClick={() => props.handleElementClick(props.id, props.ready)}
+			onClick={() => props.handleElementClick(props.id)}
 		>
 			<img src={`${img_path}`} alt="roślinka" />
 		</div>

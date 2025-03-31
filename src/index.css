@@ -34,27 +34,32 @@ header > nav {
 	gap: 10px;
 }
 .dropdown {
-	position: relative; /* Pozycjonowanie względem rodzica */
+	position: relative;
+	/* width: 200px; */
 }
 
+/* .dropdown-button {
+	width: 100%;
+} */
+
 .nav-button {
-	background-color: transparent; /* Tło przycisku */
-	border: 2px solid #ddd; /* Granica przycisku */
+	background-color: transparent;
+	border: 2px solid #ddd;
 	border-radius: 8px;
-	padding: 8px 16px; /* Wyrównanie tekstu wewnątrz przycisku */
-	font-size: 16px; /* Rozmiar czcionki */
-	color: #fff; /* Kolor tekstu */
+	padding: 8px 16px;
+	font-size: 16px;
+	color: #fff;
 	cursor: pointer;
-	transition: all 0.3s ease; /* Animacja przejścia przy hover */
+	transition: all 0.3s ease;
 }
 
 .nav-button:hover {
-	background-color: #333; /* Kolor tła przy hover */
+	background-color: #333;
 }
 
 .nav-button:focus {
-	outline: none; /* Usuwamy obramowanie przy kliknięciu */
-	box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.5); /* Efekt focus */
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.5);
 }
 .plant-list {
 	background-color: #242424;
