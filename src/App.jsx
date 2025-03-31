@@ -3,12 +3,21 @@ import Header from "./components/Header.jsx";
 import Roslinka from "./components/Roslinka.jsx";
 
 function App() {
-	const [plantType, setPlantType] = useState(Array(10).fill(0));
-	const [Stage, setStage] = useState(Array(10).fill(1));
-	const [growthCount, setGrowthCount] = useState(Array(10).fill(0));
-	const [spoilCount, setSpoilCount] = useState(Array(10).fill(0));
-	const [spoiledPlants, setSpoiledPlants] = useState(Array(10).fill(false));
-	const [ready, setReady] = useState(Array(10).fill(false));
+	const MAX = 5;
+
+	const [plants, setPlants] = useState(
+		Array(10)
+			.fill()
+			.map(() => ({
+				type: 0,
+				stage: 1,
+				growthCount: 0,
+				spoilCount: 0,
+				spoiled: false,
+				ready: false,
+			}))
+	);
+
 	const [isPlantOpen, setIsPlantOpen] = useState(false);
 	const [activeButton, setActiveButton] = useState(null);
 
@@ -17,96 +26,97 @@ function App() {
 		setActiveButton(actionName);
 	};
 
-	const setCrop = (id, plant_type) => {
-		setPlantType((prevArray) =>
-			prevArray.map((prevValue, i) => (i === id ? plant_type : prevValue))
-		);
-		setStage((prevArray) =>
-			prevArray.map((prevValue, i) => (i === id ? 1 : prevValue))
-		);
-		setReady((prevArray) =>
-			prevArray.map((prevValue, i) => (i === id ? false : prevValue))
-		);
-		setGrowthCount((prevArray) =>
-			prevArray.map((prevValue, i) => (i === id ? 0 : prevValue))
-		);
-		setSpoilCount((prevArray) =>
-			prevArray.map((prevValue, i) => (i === id ? 0 : prevValue))
-		);
+	const setCrop = (id, plantType) => {
+		setPlants((prevPlants) => {
+			const newPlants = [...prevPlants];
+			newPlants[id] = {
+				...newPlants[id],
+				type: plantType,
+				stage: 1,
+				growthCount: 0,
+				spoilCount: 0,
+				spoiled: false,
+				ready: false,
+			};
+			return newPlants;
+		});
 	};
 
-	const handleElementClick = (id, ready) => {
+	const handleElementClick = (id) => {
+		const plant = plants[id];
+
 		if (activeButton === "Pszenica") {
 			setCrop(id, 1);
-		}
-		if (activeButton === "Marchewka") {
+		} else if (activeButton === "Marchewka") {
 			setCrop(id, 2);
-		}
-		if (activeButton === "Ziemniak") {
+		} else if (activeButton === "Ziemniak") {
 			setCrop(id, 3);
-		}
-		if (activeButton === "Podlewanie") {
+		} else if (activeButton === "Podlewanie") {
 			console.log("podlewam");
-		}
-		if (activeButton === "Nawozenie") {
-			if (ready) {
-				setStage((prevArray) =>
-					prevArray.map((prevValue, i) =>
-						i === id ? Math.min(4, prevValue + 1) : prevValue
-					)
-				);
-				setReady((prevArray) =>
-					prevArray.map((prevValue, i) => (i === id ? false : prevValue))
-				);
-				setGrowthCount((prevArray) =>
-					prevArray.map((prevValue, i) => (i === id ? 0 : prevValue))
-				);
-			}
-		}
-		if (activeButton === "Ratowanie") {
-			setSpoiledPlants((prevArray) =>
-				prevArray.map((spoiled, i) => (i === id ? false : spoiled))
-			);
-		}
-		if (activeButton === "Scinanie") {
+		} else if (activeButton === "Nawozenie" && plant.ready && !plant.spoiled) {
+			setPlants((prevPlants) => {
+				const newPlants = [...prevPlants];
+				newPlants[id] = {
+					...newPlants[id],
+					stage: Math.min(4, newPlants[id].stage + 1),
+					ready: false,
+					growthCount: 0,
+				};
+				return newPlants;
+			});
+		} else if (activeButton === "Ratowanie" && plant.spoiled) {
+			setPlants((prevPlants) => {
+				const newPlants = [...prevPlants];
+				newPlants[id] = {
+					...newPlants[id],
+					spoiled: false,
+					spoilCount: 0,
+					ready: false,
+					growthCount: 0,
+				};
+				return newPlants;
+			});
+		} else if (activeButton === "Scinanie") {
 			console.log("Scinam");
 		}
 	};
 
-	// useEffect(() => {
-	// 	console.log("Ready state:", ready);
-	// 	console.log("Spoil count:", spoilCount);
-	// 	console.log("Spoiled plants:", spoiledPlants);
-	// }, [ready, spoilCount, spoiledPlants]);
-
 	// Wzrost rosliny
 	useEffect(() => {
 		const growthTimer = setInterval(() => {
-			setGrowthCount((prevGrowthCount) =>
-				prevGrowthCount.map((count, index) =>
-					plantType[index] !== 0 && Stage[index] < 4 && count < 5
-						? count + 1
-						: count
-				)
-			);
+			setPlants((prevPlants) => {
+				return prevPlants.map((plant) => {
+					if (
+						plant.type !== 0 &&
+						plant.stage < 4 &&
+						plant.growthCount < MAX &&
+						!plant.spoiled
+					) {
+						return {
+							...plant,
+							growthCount: plant.growthCount + 1,
+						};
+					}
+					return plant;
+				});
+			});
 		}, 1000);
+
 		return () => clearInterval(growthTimer);
-	}, [Stage, plantType]);
+	}, []);
 
 	// Psucie rosliny
 	useEffect(() => {
 		const spoilTimer = setInterval(() => {
-			setSpoilCount((prevSpoilCount) => {
-				return prevSpoilCount.map((count, index) => {
-					if (ready[index] && plantType[index] !== 0 && !spoiledPlants[index]) {
-						console.log(
-							`Zwiększam spoilCount dla rośliny ${index}: ${count} -> ${
-								count + 1
-							}`
-						);
-						return count + 1;
+			setPlants((prevPlants) => {
+				return prevPlants.map((plant) => {
+					if (plant.ready && plant.type !== 0 && !plant.spoiled) {
+						return {
+							...plant,
+							spoilCount: plant.spoilCount + 1,
+						};
 					}
-					return count;
+					return plant;
 				});
 			});
 		}, 1000);
@@ -114,40 +124,57 @@ function App() {
 		return () => clearInterval(spoilTimer);
 	}, []);
 
+	// Update ready state based on growth count
 	useEffect(() => {
-		setReady((prevReady) =>
-			growthCount.map((count, index) =>
-				count >= 5 && plantType[index] !== 0 && Stage[index] !== 4
-					? true
-					: prevReady[index]
-			)
-		);
-	}, [growthCount]);
+		setPlants((prevPlants) => {
+			return prevPlants.map((plant) => {
+				if (
+					plant.growthCount >= MAX &&
+					plant.type !== 0 &&
+					plant.stage !== 4 &&
+					!plant.ready
+				) {
+					return {
+						...plant,
+						ready: true,
+					};
+				}
+				return plant;
+			});
+		});
+	}, [plants]);
 
+	// Update spoiled state based on spoil count
 	useEffect(() => {
-		setSpoiledPlants((prevSpoiledPlants) =>
-			prevSpoiledPlants.map((spoiled, index) =>
-				spoilCount[index] >= 5 && plantType[index] !== 0 ? true : spoiled
-			)
-		);
-	}, [spoilCount, plantType]);
+		setPlants((prevPlants) => {
+			return prevPlants.map((plant) => {
+				if (plant.spoilCount >= MAX && plant.type !== 0 && !plant.spoiled) {
+					return {
+						...plant,
+						spoiled: true,
+					};
+				}
+				return plant;
+			});
+		});
+	}, [plants]);
 
 	return (
 		<>
 			<Header handleButtonClick={handleButtonClick} isPlantOpen={isPlantOpen} />
 			<div className="pole">
-				{plantType.map((plant_type, index) => (
+				{plants.map((plant, index) => (
 					<Roslinka
 						key={index}
 						id={index}
-						plant_type={plant_type}
-						stage={Stage[index]}
+						plant_type={plant.type}
+						stage={plant.stage}
 						max={5}
 						interval={1000}
-						spoiled={spoiledPlants[index]}
-						ready={ready[index]}
-						growthCount={growthCount[index]}
-						spoilCount={spoilCount[index]}
+						spoiled={plant.spoiled}
+						ready={plant.ready}
+						growthCount={plant.growthCount}
+						spoilCount={plant.spoilCount}
 						handleElementClick={handleElementClick}
 					/>
 				))}

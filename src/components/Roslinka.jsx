@@ -15,10 +15,10 @@ export default function Roslinka(props) {
 						return "empty.png";
 				}
 		  })();
-
+	const ready_border = props.ready && !props.spoiled ? "ready" : "fill-border";
 	return (
 		<div
-			className={`pole-grzadka ${props.ready ? "ready" : "fill-border"}`}
+			className={`pole-grzadka ${ready_border}`}
 			onClick={() => props.handleElementClick(props.id, props.ready)}
 		>
 			<img src={`${img_path}`} alt="roślinka" />
