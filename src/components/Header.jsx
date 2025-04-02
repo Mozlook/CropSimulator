@@ -5,21 +5,24 @@ export default function Header({ isPlantOpen, handleButtonClick, cropAmount }) {
 			<nav>
 				<div className="dropdown">
 					<button
-						onClick={() => handleButtonClick("placeholder", !isPlantOpen)}
-						className="nav-button"
+						onClick={() => handleButtonClick(null, !isPlantOpen)}
+						className="nav-button dropdown-button"
 					>
-						Roślinka
+						Roślinki
 					</button>
 					{isPlantOpen && (
 						<ul className="plant-list">
 							<li onClick={() => handleButtonClick("Pszenica", false)}>
-								{`Pszenica ${cropAmount[0]}`}
+								<img src="wheatIcon.webp" alt="wheat icon" />
+								{`Pszenica: ${cropAmount[0]}`}
 							</li>
 							<li onClick={() => handleButtonClick("Marchewka", false)}>
-								{`Marchewka ${cropAmount[1]}`}
+								<img src="carrotIcon.webp" alt="wheat icon" />
+								{`Marchewka: ${cropAmount[1]}`}
 							</li>
 							<li onClick={() => handleButtonClick("Ziemniak", false)}>
-								{`Ziemniak ${cropAmount[2]}`}
+								<img src="potatoIcon.webp" alt="wheat icon" />
+								{`Ziemniak: ${cropAmount[2]}`}
 							</li>
 						</ul>
 					)}

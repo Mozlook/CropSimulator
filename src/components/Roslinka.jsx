@@ -22,6 +22,15 @@ export default function Roslinka(props) {
 			onClick={() => props.handleElementClick(props.id)}
 		>
 			<img src={`${img_path}`} alt="roślinka" />
+			<div className="status-text">
+				{props.ready || props.stage == 4
+					? !props.spoiled && (
+							<p>Zwiednie za: {props.max - props.spoilCount} sekund</p>
+					  )
+					: props.type != 0 && (
+							<p>Gotowa za: {props.max - props.growthCount} sekund</p>
+					  )}
+			</div>
 		</div>
 	);
 }

@@ -66,6 +66,7 @@ export default function Field({
 					stage: Math.min(4, newPlants[id].stage + 1),
 					ready: false,
 					growthCount: 0,
+					spoilCount: 0,
 				};
 				return newPlants;
 			});
@@ -82,6 +83,13 @@ export default function Field({
 				return newPlants;
 			});
 		} else if (activeButton === "Scinanie") {
+			if (plants[id].stage === 4) {
+				setCropAmount((prevAmount) => {
+					const newAmount = [...prevAmount];
+					newAmount[plants[id].type - 1] = newAmount[plants[id].type - 1] + 3;
+					return newAmount;
+				});
+			}
 			setPlants((prevPlants) => {
 				const newPlants = [...prevPlants];
 
@@ -109,7 +117,6 @@ export default function Field({
 
 					if (plant.stage < 4 && plant.growthCount < MAX) {
 						const newGrowthCount = plant.growthCount + 1;
-
 						const becomeReady = newGrowthCount >= MAX && !plant.ready;
 
 						return {
@@ -131,7 +138,12 @@ export default function Field({
 		const spoilTimer = setInterval(() => {
 			setPlants((prevPlants) => {
 				return prevPlants.map((plant) => {
-					if (plant.type === 0 || !plant.ready || plant.spoiled) return plant;
+					if (
+						plant.type === 0 ||
+						(!plant.ready && plant.stage !== 4) ||
+						plant.spoiled
+					)
+						return plant;
 
 					const newSpoilCount = plant.spoilCount + 1;
 					const becomeSpoiled = newSpoilCount >= MAX;
@@ -161,7 +173,7 @@ export default function Field({
 						id={index}
 						type={plant.type}
 						stage={plant.stage}
-						max={5}
+						max={MAX}
 						interval={1000}
 						spoiled={plant.spoiled}
 						ready={plant.ready}

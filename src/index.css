@@ -35,12 +35,21 @@ header > nav {
 }
 .dropdown {
 	position: relative;
-	/* width: 200px; */
+	width: 175px;
 }
 
-/* .dropdown-button {
+.dropdown-button {
 	width: 100%;
-} */
+}
+
+.plant-list > li {
+	display: flex;
+}
+
+.plant-list > li > img {
+	height: 25px;
+	width: auto;
+}
 
 .nav-button {
 	background-color: transparent;
@@ -100,10 +109,13 @@ header > nav {
 
 .pole-grzadka {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: auto;
 	max-width: 100%;
+	position: relative;
+	height: 100%;
 }
 
 .pole-grzadka > img {
@@ -119,4 +131,17 @@ header > nav {
 
 .fill-border {
 	border: 3px solid rgba(64, 193, 73, 0);
+}
+
+.status-text {
+	height: 1.5em;
+	min-height: 1.5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5px;
+}
+
+.status-text p {
+	margin: 0;
 }
