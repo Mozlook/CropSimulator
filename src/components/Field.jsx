@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Header from "./Header.jsx";
-import Roslinka from "./Roslinka.jsx";
+import Plant from "./Plant.jsx";
 
 export default function Field({
 	cropAmount,
@@ -182,7 +182,7 @@ export default function Field({
 			/>
 			<div className="pole">
 				{plants.map((plant, index) => (
-					<Roslinka
+					<Plant
 						key={index}
 						id={index}
 						type={plant.type}

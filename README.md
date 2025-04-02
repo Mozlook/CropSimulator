@@ -1,12 +1,92 @@
-# React + Vite
+# CropSimulator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-v17.0.2-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-Currently, two official plugins are available:
+CropSimulator is a crop management simulator written in React. The game allows users to plant, water, fertilize, and harvest crops, as well as shop for upgrades.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [Project Structure](#project-structure)
+- [Components](#components)
+- [Contributing](#contributing)
+- [License](#license)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Installation
+
+To install the project, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Mozlook/CropSimulator.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd CropSimulator
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+## Running the Application
+
+To run the application in development mode, execute:
+
+```bash
+npm run dev
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Project Structure
+
+The project consists of the following files and directories:
+
+```
+CropSimulator/
+├── src/
+│   ├── components/
+│   │   ├── Field.jsx
+│   │   ├── Header.jsx
+│   │   ├── Roslinka.jsx
+│   │   └── Shop.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── .gitignore
+├── package.json
+└── README.md
+```
+
+## Components
+
+### App.jsx
+
+The main application component that holds the state of the page and crops. Depending on the `page` state, it renders the appropriate component (`Field` or `Shop`).
+
+### Field.jsx
+
+A component responsible for displaying the crop field. It contains the logic for planting, watering, fertilizing, rescuing, and harvesting crops.
+
+### Header.jsx
+
+The application header containing action buttons and a dropdown menu with crop options.
+
+### Plant.jsx
+
+A component representing a single plant in the field. Displays the appropriate graphic depending on the plant's state (type, growth stage, whether it is spoiled).
+
+### Shop.jsx
+
+A shop component where you can buy upgrades and new seeds.
+
+## Contributing
+
+If you would like to contribute to the project, please open a pull request or submit an issue.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

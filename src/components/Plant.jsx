@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export default function Roslinka(props) {
 	const img_path = props.spoiled
 		? "spoiled.png"

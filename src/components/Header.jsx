@@ -1,4 +1,3 @@
-import { useState } from "react";
 export default function Header({
 	isPlantOpen,
 	handleButtonClick,
@@ -42,7 +41,7 @@ export default function Header({
 					onClick={() => handleButtonClick("Nawozenie", false)}
 					className="nav-button"
 				>
-					Compost
+					Fertilize
 				</button>
 				<button
 					onClick={() => handleButtonClick("Ratowanie", false)}
