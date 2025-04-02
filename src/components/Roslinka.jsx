@@ -15,20 +15,25 @@ export default function Roslinka(props) {
 						return "empty.png";
 				}
 		  })();
-	const ready_border = props.ready && !props.spoiled ? "ready" : "fill-border";
+	const ready_border =
+		props.stage === 4 && !props.spoiled
+			? "ready-harvest"
+			: props.ready && !props.spoiled
+			? "ready"
+			: "fill-border";
 	return (
 		<div
-			className={`pole-grzadka ${ready_border}`}
+			className={`pole-grzadka`}
 			onClick={() => props.handleElementClick(props.id)}
 		>
-			<img src={`${img_path}`} alt="roślinka" />
+			<img src={`${img_path}`} alt="roślinka" className={`${ready_border}`} />
 			<div className="status-text">
 				{props.ready || props.stage == 4
 					? !props.spoiled && (
-							<p>Zwiednie za: {props.max - props.spoilCount} sekund</p>
+							<p>Spoiled in: {props.max - props.spoilCount} seconds</p>
 					  )
 					: props.type != 0 && (
-							<p>Gotowa za: {props.max - props.growthCount} sekund</p>
+							<p>Ready in: {props.max - props.growthCount} seconds</p>
 					  )}
 			</div>
 		</div>

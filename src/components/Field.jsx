@@ -8,6 +8,7 @@ export default function Field({
 	plants,
 	setPlants,
 	MAX,
+	setPage,
 }) {
 	const [isPlantOpen, setIsPlantOpen] = useState(false);
 	const [activeButton, setActiveButton] = useState(null);
@@ -18,6 +19,11 @@ export default function Field({
 	};
 
 	const setCrop = (id, PlantType) => {
+		setCropAmount((prevCropAmount) => {
+			const newCropAmount = [...prevCropAmount];
+			newCropAmount[PlantType - 1] = newCropAmount[PlantType - 1] - 1;
+			return newCropAmount;
+		});
 		setPlants((prevPlants) => {
 			const newPlants = [...prevPlants];
 			if (newPlants[id].type === 0) {
@@ -40,11 +46,17 @@ export default function Field({
 		const plant = plants[id];
 
 		if (activeButton === "Pszenica") {
-			setCrop(id, 1);
+			if (cropAmount[0] > 0) {
+				setCrop(id, 1);
+			}
 		} else if (activeButton === "Marchewka") {
-			setCrop(id, 2);
+			if (cropAmount[1] > 0) {
+				setCrop(id, 2);
+			}
 		} else if (activeButton === "Ziemniak") {
-			setCrop(id, 3);
+			if (cropAmount[2] > 0) {
+				setCrop(id, 3);
+			}
 		} else if (activeButton === "Podlewanie") {
 			setPlants((prevPlants) => {
 				const newPlants = [...prevPlants];
@@ -79,6 +91,7 @@ export default function Field({
 					spoilCount: 0,
 					ready: false,
 					growthCount: 0,
+					stage: newPlants[id].stage === 4 ? 3 : newPlants[id].stage,
 				};
 				return newPlants;
 			});
@@ -165,6 +178,7 @@ export default function Field({
 				handleButtonClick={handleButtonClick}
 				isPlantOpen={isPlantOpen}
 				cropAmount={cropAmount}
+				setPage={setPage}
 			/>
 			<div className="pole">
 				{plants.map((plant, index) => (
