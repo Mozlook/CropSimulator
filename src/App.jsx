@@ -19,6 +19,15 @@ function App() {
 			}))
 	);
 
+	const [unlocks, setUnlocks] = useState({
+		unlockedPlots: 1,
+		carrotsUnlocked: false,
+		potatosUnlocked: false,
+		wateringSpeed: 5,
+		cropYield: 3,
+		growthSpeed: 0,
+	});
+
 	switch (page) {
 		case 1:
 			return (
@@ -29,6 +38,7 @@ function App() {
 					setPlants={setPlants}
 					MAX={MAX}
 					setPage={setPage}
+					unlocks={unlocks}
 				/>
 			);
 		case 2:
@@ -37,6 +47,8 @@ function App() {
 					setPage={setPage}
 					cropAmount={cropAmount}
 					setCropAmount={setCropAmount}
+					unlocks={unlocks}
+					setUnlocks={setUnlocks}
 				/>
 			);
 

@@ -1,4 +1,8 @@
+import { FaTimesCircle } from "react-icons/fa";
+
 export default function Roslinka(props) {
+	const isLocked = props.id >= props.unlocks.unlockedPlots;
+
 	const img_path = props.spoiled
 		? "spoiled.png"
 		: (() => {
@@ -13,26 +17,37 @@ export default function Roslinka(props) {
 						return "empty.png";
 				}
 		  })();
+
 	const ready_border =
 		props.stage === 4 && !props.spoiled
 			? "ready-harvest"
 			: props.ready && !props.spoiled
 			? "ready"
 			: "fill-border";
+
 	return (
 		<div
-			className={`pole-grzadka`}
-			onClick={() => props.handleElementClick(props.id)}
+			className={`pole-grzadka ${isLocked ? "locked" : ""}`}
+			onClick={() => !isLocked && props.handleElementClick(props.id)}
 		>
 			<img src={`${img_path}`} alt="roślinka" className={`${ready_border}`} />
-			<div className="status-text">
-				{props.ready || props.stage == 4
-					? !props.spoiled && (
-							<p>Spoiled in: {props.max - props.spoilCount} seconds</p>
-					  )
-					: props.type != 0 && (
-							<p>Ready in: {props.max - props.growthCount} seconds</p>
-					  )}
+			{isLocked && <FaTimesCircle className="lock-icon" />}
+			<div className={`status-text ${isLocked ? "locked" : ""}`}>
+				{isLocked ? (
+					<p>Locked</p>
+				) : props.ready || props.stage === 4 ? (
+					!props.spoiled && (
+						<p>Spoiled in: {props.max - props.spoilCount} seconds</p>
+					)
+				) : (
+					props.type !== 0 && (
+						<p>
+							Ready in:{" "}
+							{props.max - props.growthCount - props.unlocks.growthSpeed}{" "}
+							seconds
+						</p>
+					)
+				)}
 			</div>
 		</div>
 	);

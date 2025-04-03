@@ -3,6 +3,7 @@ export default function Header({
 	handleButtonClick,
 	cropAmount,
 	setPage,
+	unlocks,
 }) {
 	return (
 		<header>
@@ -20,14 +21,18 @@ export default function Header({
 								<img src="wheatIcon.webp" alt="wheat icon" />
 								{`Wheat: ${cropAmount[0]}`}
 							</li>
-							<li onClick={() => handleButtonClick("Marchewka", false)}>
-								<img src="carrotIcon.webp" alt="wheat icon" />
-								{`Carrot: ${cropAmount[1]}`}
-							</li>
-							<li onClick={() => handleButtonClick("Ziemniak", false)}>
-								<img src="potatoIcon.webp" alt="wheat icon" />
-								{`Potato: ${cropAmount[2]}`}
-							</li>
+							{unlocks.carrotsUnlocked && (
+								<li onClick={() => handleButtonClick("Marchewka", false)}>
+									<img src="carrotIcon.webp" alt="wheat icon" />
+									{`Carrot: ${cropAmount[1]}`}
+								</li>
+							)}
+							{unlocks.potatosUnlocked && (
+								<li onClick={() => handleButtonClick("Ziemniak", false)}>
+									<img src="potatoIcon.webp" alt="wheat icon" />
+									{`Potato: ${cropAmount[2]}`}
+								</li>
+							)}
 						</ul>
 					)}
 				</div>

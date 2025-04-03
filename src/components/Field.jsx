@@ -9,6 +9,7 @@ export default function Field({
 	setPlants,
 	MAX,
 	setPage,
+	unlocks,
 }) {
 	const [isPlantOpen, setIsPlantOpen] = useState(false);
 	const [activeButton, setActiveButton] = useState(null);
@@ -61,7 +62,7 @@ export default function Field({
 			setPlants((prevPlants) => {
 				const newPlants = [...prevPlants];
 				const plant = newPlants[id];
-				const newGrowthCount = plant.growthCount + 5;
+				const newGrowthCount = plant.growthCount + unlocks.wateringSpeed;
 
 				newPlants[id] = {
 					...plant,
@@ -99,7 +100,8 @@ export default function Field({
 			if (plants[id].stage === 4) {
 				setCropAmount((prevAmount) => {
 					const newAmount = [...prevAmount];
-					newAmount[plants[id].type - 1] = newAmount[plants[id].type - 1] + 3;
+					newAmount[plants[id].type - 1] =
+						newAmount[plants[id].type - 1] + unlocks.cropYield;
 					return newAmount;
 				});
 			}
@@ -128,9 +130,13 @@ export default function Field({
 				return prevPlants.map((plant) => {
 					if (plant.type === 0 || plant.spoiled) return plant;
 
-					if (plant.stage < 4 && plant.growthCount < MAX) {
+					if (
+						plant.stage < 4 &&
+						plant.growthCount < MAX - unlocks.growthSpeed
+					) {
 						const newGrowthCount = plant.growthCount + 1;
-						const becomeReady = newGrowthCount >= MAX && !plant.ready;
+						const becomeReady =
+							newGrowthCount >= MAX - unlocks.growthSpeed && !plant.ready;
 
 						return {
 							...plant,
@@ -179,6 +185,7 @@ export default function Field({
 				isPlantOpen={isPlantOpen}
 				cropAmount={cropAmount}
 				setPage={setPage}
+				unlocks={unlocks}
 			/>
 			<div className="pole">
 				{plants.map((plant, index) => (
@@ -194,6 +201,7 @@ export default function Field({
 						growthCount={plant.growthCount}
 						spoilCount={plant.spoilCount}
 						handleElementClick={handleElementClick}
+						unlocks={unlocks}
 					/>
 				))}
 			</div>

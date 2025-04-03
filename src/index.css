@@ -87,6 +87,7 @@ header > nav {
 	padding: 8px 0;
 	margin: 0;
 	z-index: 100;
+	padding: 8px 12px;
 }
 
 .plant-list li {
@@ -136,6 +137,25 @@ header > nav {
 	background-color: #505050;
 }
 
+.pole-grzadka.locked {
+	background-color: #2a2a2a;
+	pointer-events: none;
+}
+
+.pole-grzadka.locked .lock-icon {
+	opacity: 0.5;
+	position: absolute;
+	color: red;
+	font-size: 40px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.pole-grzadka.locked > img {
+	opacity: 0.5;
+}
+
 .pole-grzadka > img {
 	height: 340px;
 	width: auto;
@@ -181,6 +201,11 @@ header > nav {
 	color: #fff;
 }
 
+.status-text.locked {
+	color: #fff;
+	font-weight: bold;
+}
+
 .shop {
 	padding: 10px;
 	display: flex;
@@ -197,4 +222,14 @@ header > nav {
 	margin: 25px auto;
 	background-color: #313131;
 	width: 70 vw;
+}
+
+.upgrade {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #414141;
+	border-radius: 10px;
+	margin: 5px 10px 5px;
+	padding: 5px 10px 10px;
 }
