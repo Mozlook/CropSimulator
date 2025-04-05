@@ -43,7 +43,9 @@ export default function Roslinka(props) {
 					props.type !== 0 && (
 						<p>
 							Ready in:{" "}
-							{props.max - props.growthCount - props.unlocks.growthSpeed}{" "}
+							{Math.floor(
+								props.max - props.growthCount - props.unlocks.growthSpeed
+							)}{" "}
 							seconds
 						</p>
 					)

@@ -67,7 +67,10 @@ export default function Field({
 				newPlants[id] = {
 					...plant,
 					growthCount: newGrowthCount,
-					ready: newGrowthCount >= MAX && plant.stage < 4 ? true : plant.ready,
+					ready:
+						newGrowthCount >= MAX - unlocks.growthSpeed && plant.stage < 4
+							? true
+							: plant.ready,
 				};
 				return newPlants;
 			});
@@ -134,7 +137,7 @@ export default function Field({
 						plant.stage < 4 &&
 						plant.growthCount < MAX - unlocks.growthSpeed
 					) {
-						const newGrowthCount = plant.growthCount + 1;
+						const newGrowthCount = plant.growthCount + 0.1;
 						const becomeReady =
 							newGrowthCount >= MAX - unlocks.growthSpeed && !plant.ready;
 
@@ -147,7 +150,7 @@ export default function Field({
 					return plant;
 				});
 			});
-		}, 1000);
+		}, 100);
 
 		return () => clearInterval(growthTimer);
 	}, []);
